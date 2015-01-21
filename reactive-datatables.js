@@ -41,6 +41,7 @@ ReactiveDatatable = function (options, id) {
 			self.page = data.start / data.length;
 		}
 	}, options);
+	this.id = tableID;
 
 	// Help Blaze cleanly remove entire datatable when changing template / route by
 	// wrapping table in existing element (#{{id}}_wrap) defined in the template.
@@ -55,6 +56,12 @@ ReactiveDatatable = function (options, id) {
 	$(ourDivID).append(table);
 	this.datatable = $(table).DataTable(options);
 
+	var that = this;
+	$(table).on('page.dt', function () {
+		var info = that.datatable.page.info();
+		console.log('Setting page for table.id ' + tableID + ' to ' + info.page);
+		Session.set(tableID + 'Page', info.page);
+	} );
 };
 
 ReactiveDatatable.prototype.update = function (data){
@@ -65,6 +72,6 @@ ReactiveDatatable.prototype.update = function (data){
 		.clear()
 		.rows.add(data)
 		.draw(false)
-		.page(self.page || 0) // XXX: Can we avoid drawing twice?
+		.page(Session.get(self.id + 'Page') || 0) // XXX: Can we avoid drawing twice?
 		.draw(false);		  // I couldn't get the page drawing to work otherwise
 };
