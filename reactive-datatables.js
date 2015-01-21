@@ -59,7 +59,6 @@ ReactiveDatatable = function (options, id) {
 	var that = this;
 	$(table).on('page.dt', function () {
 		var info = that.datatable.page.info();
-		console.log('Setting page for table.id ' + tableID + ' to ' + info.page);
 		Session.set(tableID + 'Page', info.page);
 	} );
 };
