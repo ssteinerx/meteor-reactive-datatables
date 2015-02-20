@@ -47,7 +47,7 @@ ReactiveDatatable = function (options, id) {
 	// wrapping table in existing element (#{{id}}_wrap) defined in the template.
 	var table = document.createElement('table');
 	table.id = tableID;
-	table.className = "table dataTable";
+	table.className = "table dataTable " + this.options.className;
 	
 	// Render the table element inside our wrapper and turn it into a DataTable
 	// NOTE: DataTable uses tableID_wrapper so we use 'tableID_outside_wrapper' to 
